@@ -47,7 +47,7 @@ describe("netw object", function () {
             expect(networking.network).to.have.property('interface').to.be.a('string');
             expect(networking.network).to.have.property('type').to.be.a('string');
             expect(networking.network).to.have.property('mac').to.be.a('string');
-            var options = ['wifi', 'wired'];
+            var options = ['wifi', 'wired','virtual'];
             expect(options).to.include(networking.network.type);
 
         });
@@ -58,13 +58,11 @@ describe("netw object", function () {
                 expect(networking.networks[i]).to.have.property('interface').to.be.a('string');
                 expect(networking.networks[i]).to.have.property('type').to.be.a('string');
                 expect(networking.networks[i]).to.have.property('mac').to.be.a('string');
-                var options = ['wifi', 'wired'];
-                expect(options).to.include(networking.networks[i].type);
             }
         });
 
         it("validate type of interface for API compatibility", function () {
-            var options = ['wifi', 'wired'];
+            var options = ['wifi', 'wired', 'virtual'];
             for (var i = 0; i < networking.networks.length; i++) {
                 expect(options).to.include(networking.networks[i].type);
             }
@@ -74,7 +72,7 @@ describe("netw object", function () {
 
             it("wifi networks scan", function () {
                 for (var i = 0; i < networking.networks.length; i++) {
-                    if (networking.networks[i].type == 'wifi') {
+                    if (networking.networks[i].type === 'wifi') {
                         expect(networking.networks[i]).to.have.property('scan').to.be.an('array');
                     }
                 }
@@ -82,7 +80,7 @@ describe("netw object", function () {
 
             it("check essid if present", function () {
                 for (var i = 0; i < networking.networks.length; i++) {
-                    if (networking.networks[i].type == 'wifi' && networking.networks[i].gateway && networking[i].networks.essid) {
+                    if (networking.networks[i].type === 'wifi' && networking.networks[i].gateway && networking.networks[i].essid) {
                         expect(networking.networks[i]).to.have.property('essid').to.be.a('string');
                     }
                 }
